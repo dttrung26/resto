@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resto/entry_point.dart';
 import 'package:resto/screens/phoneLogin/phone_login_screen.dart';
 
 import '../../../constants.dart';
@@ -87,7 +88,7 @@ class _SignUpFormState extends State<SignUpForm> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const PghoneLoginScreen(),
+                  builder: (_) => const EntryPoint(),
                 ),
               );
             },

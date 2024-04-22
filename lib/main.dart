@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resto/constants.dart';
+import 'package:resto/screens/auth/sign_in_screen.dart';
 import 'package:resto/screens/onboarding/onboarding_scrreen.dart';
 
 void main() {
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           hintStyle: TextStyle(color: bodyTextColor),
         ),
       ),
-      home: const OnboardingScreen(),
+      home: const SignInScreen(),
     );
   }
 }
