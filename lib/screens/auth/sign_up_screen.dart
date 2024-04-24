@@ -58,14 +58,14 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: defaultPadding),
-              Center(
-                child: Text(
-                  "By Signing up you agree to our Terms \nConditions & Privacy Policy.",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              const SizedBox(height: defaultPadding),
+              // Center(
+              //   child: Text(
+              //     "By Signing up you agree to our Terms \nConditions & Privacy Policy.",
+              //     textAlign: TextAlign.center,
+              //     style: Theme.of(context).textTheme.bodyMedium,
+              //   ),
+              // ),
+              // const SizedBox(height: defaultPadding),
               // kOrText,
               // const SizedBox(height: defaultPadding),
 

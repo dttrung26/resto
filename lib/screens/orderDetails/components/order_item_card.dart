@@ -43,7 +43,7 @@ class OrderedItemCard extends StatelessWidget {
             ),
             const SizedBox(width: defaultPadding / 2),
             Text(
-              "USD$price",
+              "A\$$price",
               style: Theme.of(context)
                   .textTheme
                   .labelSmall!

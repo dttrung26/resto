@@ -29,8 +29,8 @@ class HomeScreen extends StatelessWidget {
                   .copyWith(color: primaryColor),
             ),
             const Text(
-              "San Francisco",
-              style: TextStyle(color: Colors.black),
+              "35 Daisy St, Fairy Meadow",
+              style: TextStyle(color: Colors.black, fontSize: 20),
             )
           ],
         ),
@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
               const MediumCardList(),
               const SizedBox(height: 20),
               // Banner
-              const PromotionBanner(),
+              // const PromotionBanner(),
               const SizedBox(height: 20),
               SectionTitle(
                 title: "Best Pick",
