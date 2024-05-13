@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resto/controllers/auth_provider.dart';
+import 'package:resto/models/user.dart';
 
 import '../../components/cards/big/big_card_image_slide.dart';
 import '../../components/cards/big/restaurant_info_big_card.dart';
@@ -16,11 +19,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<AuthProvider>(context, listen: false).user!;
     return Scaffold(
       appBar: AppBar(
         leading: const SizedBox(),
         title: Column(
           children: [
+            Text("G'day ${user.username}"),
             Text(
               "Delivery to".toUpperCase(),
               style: Theme.of(context)

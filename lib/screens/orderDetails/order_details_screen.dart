@@ -43,7 +43,7 @@ class OrderDetailsScreen extends StatelessWidget {
               const TotalPrice(price: 20),
               const SizedBox(height: defaultPadding * 2),
               PrimaryButton(
-                text: "Checkout (\$20.10)",
+                text: "Checkout (A\$20.10)",
                 press: () {},
               ),
             ],
