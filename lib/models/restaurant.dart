@@ -8,6 +8,7 @@ class Restaurant {
   final String postcode;
   final String phone;
   final double? averageReview;
+  final int userId;
   final List<String>? dishes;
   final List<String>? reviews;
   final List<String>? orders;
@@ -21,10 +22,11 @@ class Restaurant {
     required this.address,
     required this.postcode,
     required this.phone,
-    required this.averageReview,
-    required this.dishes,
-    required this.reviews,
-    required this.orders,
+    this.averageReview,
+    this.dishes,
+    this.reviews,
+    this.orders,
+    required this.userId,
   });
 
   // Convert a Restaurant object to a Map<String, dynamic>
@@ -42,6 +44,7 @@ class Restaurant {
       'dishes': dishes,
       'reviews': reviews,
       'orders': orders,
+      'userId': userId,
     };
   }
 
@@ -59,6 +62,7 @@ class Restaurant {
       address: json['address'],
       postcode: json['postcode'],
       phone: json['phone'],
+      userId: json['userId'],
       averageReview: json['averageReview'] ?? 0.0,
       dishes: List<String>.from(json['dishes'] ?? []),
       reviews: List<String>.from(json['reviews'] ?? []),

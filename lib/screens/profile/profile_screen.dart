@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/body.dart';
+import 'components/profile_body.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -7,7 +7,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Body(),
+      body: ProfileBody(),
     );
   }
 }
