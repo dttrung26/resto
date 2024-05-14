@@ -58,7 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
               kOrText,
               Row(
                 children: [
-                  Text("Search by category: "),
+                  const Text("Search by category: "),
                   DropdownButton<String>(
                     value: _selectedCategory,
                     onChanged: (String? newValue) {
