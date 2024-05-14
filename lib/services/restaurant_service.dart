@@ -93,7 +93,7 @@ class RestaurantService {
       });
       return restaurants;
     } else {
-      throw Exception('Failed to load restaurants');
+      return [];
     }
   }
 }

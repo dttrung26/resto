@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:resto/models/restaurant.dart';
+import 'package:resto/services/restaurant_service.dart';
 
 import '../../components/cards/big/restaurant_info_big_card.dart';
 import '../../components/scalton/big_card_scalton.dart';
@@ -14,71 +16,85 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  bool _showSearchResult = false;
-  bool _isLoading = true;
+  TextEditingController _searchController = TextEditingController();
+  List<Restaurant> _searchResults = [];
+  String _selectedCategory = 'Asian';
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 1), () {
+  void _search(String keywords) async {
+    try {
+      List<Restaurant> results =
+          await RestaurantService().searchRestaurants(keywords);
       setState(() {
-        _isLoading = false;
+        _searchResults = results;
       });
-    });
-  }
-
-  void showResult() {
-    setState(() {
-      _isLoading = true;
-    });
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        _showSearchResult = true;
-        _isLoading = false;
-      });
-    });
+    } catch (e) {
+      print('Error: $e');
+      // Handle error
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("Search Screen"),
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: defaultPadding),
-              Text('Search', style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: defaultPadding),
-              const SearchForm(),
-              const SizedBox(height: defaultPadding),
-              Text(_showSearchResult ? "Search Results" : "Top Restaurants",
-                  style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: defaultPadding),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _isLoading ? 2 : 5, //5 is demo length of your data
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: defaultPadding),
-                    child: _isLoading
-                        ? const BigCardScalton()
-                        : RestaurantInfoBigCard(
-                            // Images are List<String>
-                            images: demoBigImages..shuffle(),
-                            name: "McDonald's",
-                            rating: 4.3,
-                            numOfRating: 200,
-                            deliveryTime: 25,
-                            foodType: const [
-                              "Chinese",
-                              "American",
-                              "Deshi food"
-                            ],
-                            press: () {},
-                          ),
-                  ),
+              TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search by keyword...',
                 ),
+                onSubmitted: (_) => _search(_searchController.text),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              kOrText,
+              Row(
+                children: [
+                  Text("Search by category: "),
+                  DropdownButton<String>(
+                    value: _selectedCategory,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedCategory = newValue!;
+                        _search(_selectedCategory);
+                      });
+                    },
+                    items: <String>['Asian', 'Fast Food', 'Indian', 'American']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: _searchResults != []
+                    ? ListView.builder(
+                        itemCount: _searchResults.length,
+                        itemBuilder: (context, index) {
+                          final restaurant = _searchResults[index];
+                          return RestaurantInfoBigCard(
+                            name: restaurant.restaurantName,
+                            rating: restaurant.averageReview ?? 0,
+                            numOfRating: restaurant.reviews?.length ?? 0,
+                            deliveryTime: 25,
+                            images: [restaurant.imageUrl],
+                            foodType: [restaurant.category],
+                            press: () {},
+                          );
+                        },
+                      )
+                    : const Text("No restaurant found"),
               ),
             ],
           ),
