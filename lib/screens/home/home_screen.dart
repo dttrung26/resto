@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resto/controllers/auth_provider.dart';
+import 'package:resto/models/restaurant.dart';
 import 'package:resto/models/user.dart';
+import 'package:resto/services/restaurant_service.dart';
 
 import '../../components/cards/big/big_card_image_slide.dart';
 import '../../components/cards/big/restaurant_info_big_card.dart';
@@ -19,13 +21,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<AuthProvider>(context, listen: false).user!;
+    // User user = Provider.of<AuthProvider>(context, listen: false).user!;
+    final restaurantService = RestaurantService();
     return Scaffold(
       appBar: AppBar(
         leading: const SizedBox(),
         title: Column(
           children: [
-            Text("G'day ${user.username}"),
+            // Text("G'day ${user.username}"),
             Text(
               "Delivery to".toUpperCase(),
               style: Theme.of(context)
@@ -62,13 +65,58 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: defaultPadding),
+              //Big card
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
                 child: BigCardImageSlide(images: demoBigImages),
               ),
               const SizedBox(height: defaultPadding * 2),
               SectionTitle(
-                title: "Featured Partners",
+                title: "Cate 1",
+                press: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FeaturedScreen(),
+                  ),
+                ),
+              ),
+              //Medium Card FutureBuilder
+              FutureBuilder<List<Restaurant>>(
+                future: restaurantService.getRestaurants(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.hasData) {
+                    final List<Restaurant> restaurants = snapshot.data!;
+                    print("Medium Card Builder ${restaurants.toString()}");
+                    if (restaurants == []) {
+                      return Text("Empty Restaurants data");
+                    } else {
+                      return MediumCardList(
+                        restaurantList: restaurants,
+                      );
+                    }
+                    // return ListView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: restaurants.length,
+                    //   itemBuilder: (context, index) {
+                    //     final Restaurant restaurant = restaurants[index];
+                    //     return ListTile(
+                    //       title: Text(restaurant.restaurantName),
+                    //       subtitle: Text(restaurant.category),
+                    //     );
+                    //   },
+                    // );
+                  } else {
+                    return const Center(child: Text('Snapshot has no data.'));
+                  }
+                },
+              ),
+
+              SectionTitle(
+                title: "Cate 2",
                 press: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -77,7 +125,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: defaultPadding),
-              const MediumCardList(),
+              // const MediumCardList(
+              //   restaurant: Restaurant,
+              // ),
               const SizedBox(height: 20),
               // Banner
               // const PromotionBanner(),
@@ -92,7 +142,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const MediumCardList(),
+              // const MediumCardList(),
               const SizedBox(height: 20),
               SectionTitle(title: "All Restaurants", press: () {}),
               const SizedBox(height: 16),

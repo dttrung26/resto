@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:resto/constants.dart';
+import 'package:resto/controllers/auth_provider.dart';
+import 'package:resto/models/user.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key});
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  @override
   Widget build(BuildContext context) {
+    var user = Provider.of<AuthProvider>(context, listen: false);
+    bool isRestoOwner = user.user!.role == "restaurant";
+    bool isNormalUser = user.user!.role == "user";
     return SafeArea(
       child: SingleChildScrollView(
         child: Padding(
@@ -22,30 +33,46 @@ class Body extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 16),
-              ProfileMenuCard(
-                svgSrc: "assets/icons/profile.svg",
-                title: "Profile Information",
-                subTitle: "Change your account information",
-                press: () {},
-              ),
-              ProfileMenuCard(
-                svgSrc: "assets/icons/lock.svg",
-                title: "Change Password",
-                subTitle: "Change your password",
-                press: () {},
-              ),
-              ProfileMenuCard(
-                svgSrc: "assets/icons/card.svg",
-                title: "Payment Methods",
-                subTitle: "Add your credit & debit cards",
-                press: () {},
-              ),
-              ProfileMenuCard(
-                svgSrc: "assets/icons/marker.svg",
-                title: "Locations",
-                subTitle: "Add or remove your delivery locations",
-                press: () {},
-              ),
+              // isNormalUser
+              //     ? ProfileMenuCard(
+              //         svgSrc: "assets/icons/profile.svg",
+              //         title: "Profile Information",
+              //         subTitle: "Change your account information",
+              //         press: () {},
+              //       )
+              //     : Container(),
+              // isNormalUser
+              //     ? ProfileMenuCard(
+              //         svgSrc: "assets/icons/lock.svg",
+              //         title: "Change Password",
+              //         subTitle: "Change your password",
+              //         press: () {},
+              //       )
+              //     : Container(),
+              isNormalUser
+                  ? ProfileMenuCard(
+                      svgSrc: "assets/icons/card.svg",
+                      title: "Payment Methods",
+                      subTitle: "Add your credit & debit cards",
+                      press: () {},
+                    )
+                  : Container(),
+              isNormalUser
+                  ? ProfileMenuCard(
+                      svgSrc: "assets/icons/marker.svg",
+                      title: "Locations",
+                      subTitle: "Add or remove your delivery locations",
+                      press: () {},
+                    )
+                  : Container(),
+              isRestoOwner
+                  ? ProfileMenuCard(
+                      svgSrc: "assets/icons/plus.svg",
+                      title: "Update Restaurant",
+                      subTitle: "Create or update your restaurant information",
+                      press: () {},
+                    )
+                  : Container(),
               // ProfileMenuCard(
               //   svgSrc: "assets/icons/fb.svg",
               //   title: "Add Social Account",

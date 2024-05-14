@@ -7,10 +7,10 @@ class Restaurant {
   final String address;
   final String postcode;
   final String phone;
-  final double averageReview;
-  final List<String> dishes;
-  final List<String> reviews;
-  final List<String> orders;
+  final double? averageReview;
+  final List<String>? dishes;
+  final List<String>? reviews;
+  final List<String>? orders;
 
   Restaurant({
     required this.restaurantId,
@@ -30,8 +30,8 @@ class Restaurant {
   // Convert a Restaurant object to a Map<String, dynamic>
   Map<String, dynamic> toJson() {
     return {
-      'restaurantId': restaurantId,
-      'restaurantName': restaurantName,
+      'resturantId': restaurantId,
+      'resturantName': restaurantName,
       'description': description,
       'imageUrl': imageUrl,
       'category': category,
@@ -48,15 +48,18 @@ class Restaurant {
   // Create a Restaurant object from a Map<String, dynamic>
   factory Restaurant.fromJson(Map<String, dynamic> json) {
     return Restaurant(
-      restaurantId: json['restaurantId'],
-      restaurantName: json['restaurantName'],
+      restaurantId: json['resturantId'],
+      restaurantName: json['resturantName'],
       description: json['description'],
-      imageUrl: json['imageUrl'],
+      //default feature image
+      imageUrl: json['imageUrl'] == ''
+          ? 'https://cdn.otstatic.com/legacy-cw/default2-original.png'
+          : json['imageUrl'],
       category: json['category'],
       address: json['address'],
       postcode: json['postcode'],
       phone: json['phone'],
-      averageReview: json['averageReview'],
+      averageReview: json['averageReview'] ?? 0.0,
       dishes: List<String>.from(json['dishes'] ?? []),
       reviews: List<String>.from(json['reviews'] ?? []),
       orders: List<String>.from(json['orders'] ?? []),
