@@ -1,10 +1,10 @@
 // It contains all our demo data that we used
 
 List<String> demoBigImages = [
-  "assets/images/big_1.png",
-  "assets/images/big_2.png",
-  "assets/images/big_3.png",
-  "assets/images/big_4.png",
+  "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "https://images.pexels.com/photos/67468/pexels-photo-67468.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "https://images.pexels.com/photos/696218/pexels-photo-696218.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "https://images.pexels.com/photos/1579739/pexels-photo-1579739.jpeg?auto=compress&cs=tinysrgb&w=800",
 ];
 
 List<Map<String, dynamic>> demoMediumCardData = [

@@ -30,61 +30,64 @@ class RestaurantInfoBigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: press,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // pass list of images here
-          BigCardImageSlide(images: images),
-          const SizedBox(height: defaultPadding / 2),
-          Text(name, style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: defaultPadding / 4),
-          PriceRangeAndFoodtype(foodType: foodType),
-          const SizedBox(height: defaultPadding / 4),
-          Row(
-            children: [
-              RatingWithCounter(rating: rating, numOfRating: numOfRating),
-              const SizedBox(width: defaultPadding / 2),
-              SvgPicture.asset(
-                "assets/icons/clock.svg",
-                height: 20,
-                width: 20,
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .color!
-                      .withOpacity(0.5),
-                  BlendMode.srcIn,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // pass list of images here
+            BigCardImageSlide(images: images),
+            const SizedBox(height: defaultPadding / 2),
+            Text(name, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: defaultPadding / 4),
+            PriceRangeAndFoodtype(foodType: foodType),
+            const SizedBox(height: defaultPadding / 4),
+            Row(
+              children: [
+                RatingWithCounter(rating: rating, numOfRating: numOfRating),
+                const SizedBox(width: defaultPadding / 2),
+                SvgPicture.asset(
+                  "assets/icons/clock.svg",
+                  height: 20,
+                  width: 20,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .color!
+                        .withOpacity(0.5),
+                    BlendMode.srcIn,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                "$deliveryTime Min",
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-                child: SmallDot(),
-              ),
-              SvgPicture.asset(
-                "assets/icons/delivery.svg",
-                height: 20,
-                width: 20,
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .color!
-                      .withOpacity(0.5),
-                  BlendMode.srcIn,
+                const SizedBox(width: 8),
+                Text(
+                  "$deliveryTime Min",
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
-              ),
-              const SizedBox(width: 8),
-              Text(isFreeDelivery ? "Free" : "Paid",
-                  style: Theme.of(context).textTheme.labelSmall),
-            ],
-          ),
-        ],
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+                  child: SmallDot(),
+                ),
+                SvgPicture.asset(
+                  "assets/icons/delivery.svg",
+                  height: 20,
+                  width: 20,
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .color!
+                        .withOpacity(0.5),
+                    BlendMode.srcIn,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(isFreeDelivery ? "Free" : "Paid",
+                    style: Theme.of(context).textTheme.labelSmall),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

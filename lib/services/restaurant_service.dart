@@ -79,4 +79,21 @@ class RestaurantService {
       return null;
     }
   }
+
+  Future<List<Restaurant>> searchRestaurants(String keywords) async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/api/Resturant/search?keywords=$keywords'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      List<Restaurant> restaurants = [];
+      data.forEach((restaurantData) {
+        restaurants.add(Restaurant.fromJson(restaurantData));
+      });
+      return restaurants;
+    } else {
+      throw Exception('Failed to load restaurants');
+    }
+  }
 }

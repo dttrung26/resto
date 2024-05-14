@@ -15,6 +15,7 @@ import '../details/details_screen.dart';
 import '../featured/featurred_screen.dart';
 import 'components/medium_card_list.dart';
 import 'components/promotion_banner.dart';
+import 'package:resto/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -72,7 +73,7 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: defaultPadding * 2),
               SectionTitle(
-                title: "Cate 1",
+                title: "Best Pick",
                 press: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -80,6 +81,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
               //Medium Card FutureBuilder
               FutureBuilder<List<Restaurant>>(
                 future: restaurantService.getRestaurants(),
@@ -90,7 +92,6 @@ class HomeScreen extends StatelessWidget {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.hasData) {
                     final List<Restaurant> restaurants = snapshot.data!;
-                    print("Medium Card Builder ${restaurants.toString()}");
                     if (restaurants == []) {
                       return Text("Empty Restaurants data");
                     } else {
@@ -98,42 +99,44 @@ class HomeScreen extends StatelessWidget {
                         restaurantList: restaurants,
                       );
                     }
-                    // return ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: restaurants.length,
-                    //   itemBuilder: (context, index) {
-                    //     final Restaurant restaurant = restaurants[index];
-                    //     return ListTile(
-                    //       title: Text(restaurant.restaurantName),
-                    //       subtitle: Text(restaurant.category),
-                    //     );
-                    //   },
-                    // );
                   } else {
                     return const Center(child: Text('Snapshot has no data.'));
                   }
                 },
               ),
 
-              SectionTitle(
-                title: "Cate 2",
-                press: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FeaturedScreen(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: defaultPadding),
+              // SectionTitle(
+              //   title: "Cate 2",
+              //   press: () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const FeaturedScreen(),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: defaultPadding),
               // const MediumCardList(
               //   restaurant: Restaurant,
               // ),
               const SizedBox(height: 20),
               // Banner
               // const PromotionBanner(),
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
+              // SectionTitle(
+              //   title: "Best Pick",
+              //   press: () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const FeaturedScreen(),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 16),
+              // const MediumCardList(),
+              const PromotionBanner(),
+              const SizedBox(height: 16),
               SectionTitle(
-                title: "Best Pick",
+                title: "All Restaurant",
                 press: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -141,36 +144,66 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-              // const MediumCardList(),
-              const SizedBox(height: 20),
-              SectionTitle(title: "All Restaurants", press: () {}),
-              const SizedBox(height: 16),
-
-              // Demo list of Big Cards
-              ...List.generate(
-                // For demo we use 4 items
-                3,
-                (index) => Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                      defaultPadding, 0, defaultPadding, defaultPadding),
-                  child: RestaurantInfoBigCard(
-                    // Images are List<String>
-                    images: demoBigImages..shuffle(),
-                    name: "McDonald's",
-                    rating: 4.3,
-                    numOfRating: 200,
-                    deliveryTime: 25,
-                    foodType: const ["Chinese", "American", "Deshi food"],
-                    press: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DetailsScreen(),
-                      ),
-                    ),
-                  ),
-                ),
-              )
+              FutureBuilder<List<Restaurant>>(
+                future: restaurantService.getRestaurants(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.hasData) {
+                    final List<Restaurant> restaurants = snapshot.data!;
+                    print("Medium Card Builder ${restaurants.toString()}");
+                    if (restaurants.isEmpty) {
+                      return Center(child: Text("Empty Restaurants data"));
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Column(
+                          children: restaurants.map((restaurant) {
+                            return RestaurantInfoBigCard(
+                              name: restaurant.restaurantName,
+                              rating: restaurant.averageReview ?? 0,
+                              numOfRating: restaurant.reviews?.length ?? 0,
+                              deliveryTime: 25,
+                              images: [restaurant.imageUrl],
+                              foodType: [restaurant.category],
+                              press: () {},
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }
+                  } else {
+                    return const Center(child: Text('Snapshot has no data.'));
+                  }
+                },
+              ),
+              // const SizedBox(height: 16),
+              // // Demo list of Big Cards
+              // ...List.generate(
+              //   // For demo we use 4 items
+              //   3,
+              //   (index) => Padding(
+              //     padding: const EdgeInsets.fromLTRB(
+              //         defaultPadding, 0, defaultPadding, defaultPadding),
+              //     child: RestaurantInfoBigCard(
+              //       // Images are List<String>
+              //       images: demoBigImages..shuffle(),
+              //       name: "McDonald's",
+              //       rating: 4.3,
+              //       numOfRating: 200,
+              //       deliveryTime: 25,
+              //       foodType: const ["Chinese", "American", "Deshi food"],
+              //       press: () => Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const DetailsScreen(),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),
