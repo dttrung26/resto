@@ -59,7 +59,9 @@ class _MediumCardListState extends State<MediumCardList> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const DetailsScreen(),
+                      builder: (context) => DetailsScreen(
+                        restaurant: widget.restaurantList[index],
+                      ),
                     ),
                   );
                 },

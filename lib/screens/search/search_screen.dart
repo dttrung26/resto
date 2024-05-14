@@ -48,6 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
               TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
+                  icon: Icon(Icons.search),
                   hintText: 'Search by keyword...',
                 ),
                 onSubmitted: (_) => _search(_searchController.text),

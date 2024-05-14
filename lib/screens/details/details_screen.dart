@@ -1,46 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:resto/models/dish.dart';
+import 'package:resto/models/restaurant.dart';
+import 'package:resto/screens/details/components/dish_item_card.dart';
+import 'package:resto/services/dish_service.dart';
 
 import '../../constants.dart';
 import '../search/search_screen.dart';
 import 'components/featured_items.dart';
 import 'components/iteams.dart';
-import 'components/restaurrant_info.dart';
+import 'components/restaurant_info.dart';
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+class DetailsScreen extends StatefulWidget {
+  final Restaurant restaurant;
+  const DetailsScreen({super.key, required this.restaurant});
+
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  List<Dish> _dishes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDishes();
+  }
+
+  Future<void> _fetchDishes() async {
+    try {
+      List<Dish> dishes = await DishService()
+          .getDishesForRestaurant(widget.restaurant.restaurantId);
+      setState(() {
+        _dishes = dishes;
+      });
+    } catch (e) {
+      print('Error: $e');
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(_dishes);
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset("assets/icons/share.svg"),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: SvgPicture.asset("assets/icons/search.svg"),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SearchScreen(),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: const SafeArea(
+      appBar: AppBar(),
+      body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: defaultPadding / 2),
-              RestaurantInfo(),
-              SizedBox(height: defaultPadding),
-              FeaturedItems(),
-              Items(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.5,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Image.network(widget.restaurant.imageUrl,
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                const SizedBox(height: defaultPadding / 2),
+                RestaurantInfo(
+                  restaurant: widget.restaurant,
+                ),
+                const SizedBox(height: defaultPadding),
+                _dishes.isNotEmpty
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _dishes.map((dish) {
+                          return DishItemCard(
+                            dish: dish,
+                            press: () {},
+                          );
+                        }).toList(),
+                      )
+                    : Text(
+                        "No Dishes Found For This Restaurant",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      )
+              ],
+            ),
           ),
         ),
       ),

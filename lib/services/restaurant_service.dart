@@ -8,7 +8,6 @@ class RestaurantService {
 
   Future<bool> createRestaurant(Restaurant resto) async {
     try {
-      print(resto.toJson());
       final response = await http.post(
         Uri.parse('$apiUrl/api/Resturant'),
         headers: <String, String>{
@@ -16,7 +15,7 @@ class RestaurantService {
         },
         body: jsonEncode(resto.toJson()),
       );
-      print(response.statusCode);
+
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -38,10 +37,10 @@ class RestaurantService {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        print(data.toString());
+
         final List<Restaurant> restaurants =
             data.map((json) => Restaurant.fromJson(json)).toList();
-        print("restaurant_service.dart ${restaurants.toString()}");
+
         return restaurants;
       } else {
         print('Failed to load restaurants: ${response.statusCode}');
