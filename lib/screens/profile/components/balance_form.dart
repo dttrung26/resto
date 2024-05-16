@@ -5,38 +5,35 @@ import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/services/auth_service.dart';
 import 'package:resto/services/user_service.dart';
 
-class AddCardForm extends StatefulWidget {
+class BalanceForm extends StatefulWidget {
   final int userId;
-  const AddCardForm({super.key, required this.userId});
+  const BalanceForm({super.key, required this.userId});
 
   @override
-  State<AddCardForm> createState() => _AddCardFormState();
+  State<BalanceForm> createState() => _BalanceFormState();
 }
 
-class _AddCardFormState extends State<AddCardForm> {
-  final TextEditingController _cardNumberController = TextEditingController();
+class _BalanceFormState extends State<BalanceForm> {
+  final TextEditingController _balanceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          controller: _cardNumberController,
-          decoration: InputDecoration(labelText: 'Card Number'),
+          controller: _balanceController,
+          decoration: const InputDecoration(labelText: 'Balance'),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
-        // TextFormField(
-        //   controller: _balanceController,
-        //   decoration: InputDecoration(labelText: 'Balance'),
-        //   keyboardType: TextInputType.numberWithOptions(decimal: true),
-        // ),
-        const SizedBox(height: defaultPadding),
+        const SizedBox(
+          height: defaultPadding,
+        ),
         Center(
           child: ElevatedButton(
             onPressed: () async {
-              // double updatedBalance = double.parse(_balanceController.text);
+              double updatedBalance = double.parse(_balanceController.text);
               await UserService()
-                  .updatePaymentMethod(
-                      widget.userId, _cardNumberController.text)
+                  .updateBalance(widget.userId, updatedBalance)
                   .then((value) async {
                 if (value) {
                   var updatedUser =
@@ -46,7 +43,7 @@ class _AddCardFormState extends State<AddCardForm> {
                         .setUser(updatedUser);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Card updated successfully!'),
+                        content: Text('Balance updated successfully!'),
                       ),
                     );
                   }
@@ -54,7 +51,8 @@ class _AddCardFormState extends State<AddCardForm> {
               }).catchError((onError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Card update failed ${onError.toString()}'),
+                    content:
+                        Text('Balance rd update failed ${onError.toString()}'),
                   ),
                 );
               });

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resto/constants.dart';
 import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/user.dart';
+import 'package:resto/screens/profile/card_screen.dart';
 import 'package:resto/screens/profile/update_restaurant_screen.dart';
 
 class ProfileBody extends StatefulWidget {
@@ -16,7 +17,7 @@ class ProfileBody extends StatefulWidget {
 class _ProfileBodyState extends State<ProfileBody> {
   @override
   Widget build(BuildContext context) {
-    var user = Provider.of<AuthProvider>(context, listen: false).user!;
+    var user = Provider.of<AuthProvider>(context, listen: true).user!;
     bool isRestoOwner = user.role == "restaurant";
     bool isNormalUser = user.role == "user";
     return Scaffold(
@@ -56,7 +57,13 @@ class _ProfileBodyState extends State<ProfileBody> {
                         svgSrc: "assets/icons/card.svg",
                         title: "Payment Methods",
                         subTitle: "Add your credit & debit cards",
-                        press: () {},
+                        press: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => CardScreen(),
+                            ),
+                          );
+                        },
                       )
                     : Container(),
                 isNormalUser

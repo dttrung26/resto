@@ -34,7 +34,23 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(response.body.toString());
+      if (response.statusCode == 200) {
+        return User.fromJson(json.decode(response.body));
+      }
+    } catch (error) {
+      print('Error during login: $error');
+      throw Exception("Fail to login");
+    }
+  }
+
+  static Future<User?> getUserById(int userId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$apiUrl/api/User/$userId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
       if (response.statusCode == 200) {
         return User.fromJson(json.decode(response.body));
       }

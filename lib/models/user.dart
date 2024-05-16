@@ -27,7 +27,7 @@ class User {
     this.balance = 0,
     this.address,
     this.postcode,
-    this.cardNumber = '',
+    this.cardNumber,
     this.hasSubscription = false,
     this.subscreatedAt,
     this.subscriptionExpirationDate,

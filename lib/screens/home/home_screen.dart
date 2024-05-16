@@ -137,7 +137,6 @@ class HomeScreen extends StatelessWidget {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.hasData) {
                     final List<Restaurant> restaurants = snapshot.data!;
-                    print("Medium Card Builder ${restaurants.toString()}");
                     if (restaurants.isEmpty) {
                       return Center(child: Text("Empty Restaurants data"));
                     } else {
