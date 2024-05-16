@@ -138,7 +138,8 @@ class HomeScreen extends StatelessWidget {
                   } else if (snapshot.hasData) {
                     final List<Restaurant> restaurants = snapshot.data!;
                     if (restaurants.isEmpty) {
-                      return Center(child: Text("Empty Restaurants data"));
+                      return const Center(
+                          child: Text("Empty Restaurants data"));
                     } else {
                       return Padding(
                         padding: const EdgeInsets.all(defaultPadding),

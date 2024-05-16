@@ -15,7 +15,7 @@ class RestaurantService {
         },
         body: jsonEncode(resto.toJson()),
       );
-
+      print(response.statusCode);
       if (response.statusCode == 200) {
         return true;
       } else {

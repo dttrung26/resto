@@ -5,6 +5,7 @@ import 'package:resto/constants.dart';
 import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/user.dart';
 import 'package:resto/screens/profile/card_screen.dart';
+import 'package:resto/screens/profile/dish_screen.dart';
 import 'package:resto/screens/profile/location_screen.dart';
 import 'package:resto/screens/profile/update_restaurant_screen.dart';
 
@@ -85,7 +86,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                     : Container(),
                 isRestoOwner
                     ? ProfileMenuCard(
-                        svgSrc: "assets/icons/plus.svg",
+                        svgSrc: "assets/icons/resto.svg",
                         title: "Restaurant Management",
                         subTitle:
                             "Create or update your restaurant information",
@@ -94,6 +95,20 @@ class _ProfileBodyState extends State<ProfileBody> {
                             MaterialPageRoute(
                               builder: (context) =>
                                   UpdateRestaurantScreen(user: user),
+                            ),
+                          );
+                        },
+                      )
+                    : Container(),
+                isRestoOwner
+                    ? ProfileMenuCard(
+                        svgSrc: "assets/icons/dish.svg",
+                        title: "Menu Management",
+                        subTitle: "Create or update your menu information",
+                        press: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => DishScreen(user: user),
                             ),
                           );
                         },

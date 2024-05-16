@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:resto/components/cards/big/restaurant_info_big_card.dart';
 import 'package:resto/constants.dart';
 import 'package:resto/models/restaurant.dart';
 import 'package:resto/models/user.dart';
@@ -26,7 +27,7 @@ class _UpdateRestaurantScreenState extends State<UpdateRestaurantScreen> {
     _resto =
         await RestaurantService().getRestaurantByUserId(widget.user.userID);
     if (mounted) {
-      setState(() {}); // Trigger a rebuild after getting resto
+      setState(() {}); // Trigger a rebuild
     }
   }
 
@@ -48,7 +49,17 @@ class _UpdateRestaurantScreenState extends State<UpdateRestaurantScreen> {
                   "Create or update your restaurant information method",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                UpdateRestoForm(user: widget.user),
+                _resto == null
+                    ? UpdateRestoForm(user: widget.user)
+                    : RestaurantInfoBigCard(
+                        name: _resto!.restaurantName,
+                        rating: _resto!.averageReview ?? 0,
+                        numOfRating: _resto!.reviews?.length ?? 0,
+                        deliveryTime: 25,
+                        images: [_resto!.imageUrl],
+                        foodType: [_resto!.category],
+                        press: () {},
+                      ),
               ],
             ),
           ),
