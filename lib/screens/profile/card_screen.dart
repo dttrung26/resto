@@ -60,7 +60,7 @@ class _CardScreenState extends State<CardScreen> {
                     ? BalanceForm(
                         userId: user.userID,
                       )
-                    : const Placeholder(),
+                    : Container(),
               ],
             ),
           ),

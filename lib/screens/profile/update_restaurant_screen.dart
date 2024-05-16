@@ -33,9 +33,7 @@ class _UpdateRestaurantScreenState extends State<UpdateRestaurantScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Update Screen"),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -44,8 +42,12 @@ class _UpdateRestaurantScreenState extends State<UpdateRestaurantScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: defaultPadding),
-                Text("Create Restaurant Information",
+                Text("Create Restaurant",
                     style: Theme.of(context).textTheme.headlineMedium),
+                Text(
+                  "Create or update your restaurant information method",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 UpdateRestoForm(user: widget.user),
               ],
             ),

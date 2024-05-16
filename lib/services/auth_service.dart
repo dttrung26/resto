@@ -22,7 +22,7 @@ class AuthService {
       }
     } catch (error) {
       print('Error during register: $error');
-      throw Exception("Fail to register new user");
+      throw Exception("Fail to register new user $ErrorDescription");
     }
   }
 

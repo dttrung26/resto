@@ -5,6 +5,7 @@ import 'package:resto/constants.dart';
 import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/user.dart';
 import 'package:resto/screens/profile/card_screen.dart';
+import 'package:resto/screens/profile/location_screen.dart';
 import 'package:resto/screens/profile/update_restaurant_screen.dart';
 
 class ProfileBody extends StatefulWidget {
@@ -71,7 +72,15 @@ class _ProfileBodyState extends State<ProfileBody> {
                         svgSrc: "assets/icons/marker.svg",
                         title: "Locations",
                         subTitle: "Add or remove your delivery locations",
-                        press: () {},
+                        press: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => LocationScreen(
+                                user: user,
+                              ),
+                            ),
+                          );
+                        },
                       )
                     : Container(),
                 isRestoOwner
