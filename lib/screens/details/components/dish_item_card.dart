@@ -65,13 +65,13 @@ class DishItemCard extends StatelessWidget {
                           .copyWith(color: primaryColor),
                     ),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: press,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Text("Add To Card"),
+                      child: const Text("Add To Cart"),
                     ),
                   ],
                 ),

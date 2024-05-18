@@ -23,4 +23,24 @@ class DishService {
       return [];
     }
   }
+
+  Future<bool> createDishPerRestaurant(Dish dish) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$apiUrl/api/Dish'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(dish.toJson()),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      print(error);
+      return false;
+    }
+  }
 }

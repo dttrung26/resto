@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // User user = Provider.of<AuthProvider>(context, listen: false).user!;
+    User user = Provider.of<AuthProvider>(context, listen: false).user!;
     final restaurantService = RestaurantService();
     return Scaffold(
       appBar: AppBar(
@@ -37,10 +37,15 @@ class HomeScreen extends StatelessWidget {
                   .bodySmall!
                   .copyWith(color: primaryColor),
             ),
-            const Text(
-              "35 Daisy St, Fairy Meadow",
-              style: TextStyle(color: Colors.black, fontSize: 20),
-            )
+            user.address != ''
+                ? Text(
+                    "${user.address} ${user.postcode}",
+                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                  )
+                : const Text(
+                    "N/A",
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                  )
           ],
         ),
       ),
@@ -152,7 +157,16 @@ class HomeScreen extends StatelessWidget {
                               deliveryTime: 25,
                               images: [restaurant.imageUrl],
                               foodType: [restaurant.category],
-                              press: () {},
+                              press: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailsScreen(
+                                      restaurant: restaurant,
+                                    ),
+                                  ),
+                                );
+                              },
                             );
                           }).toList(),
                         ),

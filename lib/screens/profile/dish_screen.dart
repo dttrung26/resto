@@ -3,6 +3,7 @@ import 'package:resto/constants.dart';
 import 'package:resto/models/dish.dart';
 import 'package:resto/models/restaurant.dart';
 import 'package:resto/models/user.dart';
+import 'package:resto/screens/profile/components/dish_form.dart';
 import 'package:resto/services/dish_service.dart';
 import 'package:resto/services/restaurant_service.dart';
 
@@ -16,22 +17,24 @@ class DishScreen extends StatefulWidget {
 
 class _DishScreenState extends State<DishScreen> {
   List<Dish> _dishes = [];
+  Restaurant? _resto;
 
   @override
   void initState() {
     super.initState();
-    _loadDishesPerRestaurant;
+    _loadDishesPerRestaurant();
   }
 
   Future<void> _loadDishesPerRestaurant() async {
     await RestaurantService()
         .getRestaurantByUserId(widget.user.userID)
         .then((resto) async {
-      print(resto);
       if (resto != null) {
+        _resto = resto;
         _dishes =
             await DishService().getDishesForRestaurant(resto.restaurantId);
-        print(_dishes);
+      } else {
+        print("User has not created restaurant");
       }
     }).catchError((e) {
       print(e);
@@ -60,6 +63,14 @@ class _DishScreenState extends State<DishScreen> {
                   "Create or update your menu's dishes",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
+                const SizedBox(
+                  height: defaultPadding,
+                ),
+                _resto != null
+                    ? UpdateDishForm(
+                        restaurantId: _resto!.restaurantId,
+                      )
+                    : const Text("User has not created a restaurant"),
               ],
             ),
           ),

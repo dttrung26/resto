@@ -7,6 +7,7 @@ import 'package:resto/models/user.dart';
 import 'package:resto/screens/profile/card_screen.dart';
 import 'package:resto/screens/profile/dish_screen.dart';
 import 'package:resto/screens/profile/location_screen.dart';
+import 'package:resto/screens/profile/subscription_screen.dart';
 import 'package:resto/screens/profile/update_restaurant_screen.dart';
 
 class ProfileBody extends StatefulWidget {
@@ -79,6 +80,20 @@ class _ProfileBodyState extends State<ProfileBody> {
                               builder: (context) => LocationScreen(
                                 user: user,
                               ),
+                            ),
+                          );
+                        },
+                      )
+                    : Container(),
+                isNormalUser
+                    ? ProfileMenuCard(
+                        svgSrc: "assets/icons/fast-delivery.svg",
+                        title: "Subscription",
+                        subTitle: "Update or remove your subscription status",
+                        press: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SubscriptionScreen(),
                             ),
                           );
                         },

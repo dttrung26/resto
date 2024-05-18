@@ -1,39 +1,48 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:resto/models/dish.dart';
 
 import '../../../constants.dart';
 
 class OrderedItemCard extends StatelessWidget {
+  final Dish dish;
   const OrderedItemCard({
-    Key? key,
-    required this.numOfItem,
-    required this.title,
-    required this.description,
-    required this.price,
-  }) : super(key: key);
-  final int numOfItem;
-  final String? title, description;
-  final double? price;
+    super.key,
+    required this.dish,
+  });
 
   @override
   Widget build(BuildContext context) {
+    List<String> dishDescriptions = [
+      "A hearty and flavorful pasta dish",
+      "Tender and juicy grilled chicken",
+      "A crispy and delicious dish",
+      "A fresh and crunchy one",
+      "Savory and spicy beef dish, served with a variety",
+      "Toppings including lettuce, cheese, and salsa."
+    ];
+    dishDescriptions.shuffle();
+    String sillyDescription = dishDescriptions.first;
+
     return Column(
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            NumOfItems(numOfItem: numOfItem),
+            const NumOfItems(numOfItem: 1),
             const SizedBox(width: defaultPadding * 0.75),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title!,
+                    dish.name,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: defaultPadding / 4),
                   Text(
-                    description!,
+                    sillyDescription,
                     style: Theme.of(context).textTheme.bodyMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -43,7 +52,7 @@ class OrderedItemCard extends StatelessWidget {
             ),
             const SizedBox(width: defaultPadding / 2),
             Text(
-              "A\$$price",
+              "A\$${dish.price}",
               style: Theme.of(context)
                   .textTheme
                   .labelSmall!

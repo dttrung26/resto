@@ -57,7 +57,7 @@ class _UpdateRestoFormState extends State<UpdateRestoForm> {
             controller: _imageURLController,
             decoration: const InputDecoration(labelText: 'Resto Image URL'),
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Center(
             child: ElevatedButton(
               onPressed: () async {

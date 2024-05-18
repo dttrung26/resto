@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:resto/models/restaurant.dart';
+import 'package:resto/screens/details/details_screen.dart';
 import 'package:resto/services/restaurant_service.dart';
 
 import '../../components/cards/big/restaurant_info_big_card.dart';
@@ -91,7 +92,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             deliveryTime: 25,
                             images: [restaurant.imageUrl],
                             foodType: [restaurant.category],
-                            press: () {},
+                            press: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailsScreen(
+                                    restaurant: restaurant,
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         },
                       )

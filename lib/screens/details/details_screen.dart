@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:resto/controllers/cart_provider.dart';
 import 'package:resto/models/dish.dart';
 import 'package:resto/models/restaurant.dart';
 import 'package:resto/screens/details/components/dish_item_card.dart';
@@ -37,13 +39,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
       });
     } catch (e) {
       print('Error: $e');
-      // Handle error
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_dishes);
+    print('details_screen.dart: $_dishes');
+    final cart = Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -72,7 +74,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         children: _dishes.map((dish) {
                           return DishItemCard(
                             dish: dish,
-                            press: () {},
+                            press: () {
+                              print('clicked');
+                              cart.addItem(dish);
+                            },
                           );
                         }).toList(),
                       )
