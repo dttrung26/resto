@@ -1,11 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resto/controllers/cart_provider.dart';
 import 'package:resto/models/dish.dart';
 
 import '../../../constants.dart';
 
-class OrderedItemCard extends StatelessWidget {
+class OrderedItemCard extends StatefulWidget {
   final Dish dish;
   const OrderedItemCard({
     super.key,
@@ -13,7 +15,13 @@ class OrderedItemCard extends StatelessWidget {
   });
 
   @override
+  State<OrderedItemCard> createState() => _OrderedItemCardState();
+}
+
+class _OrderedItemCardState extends State<OrderedItemCard> {
+  @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context, listen: false);
     List<String> dishDescriptions = [
       "A hearty and flavorful pasta dish",
       "Tender and juicy grilled chicken",
@@ -25,44 +33,51 @@ class OrderedItemCard extends StatelessWidget {
     dishDescriptions.shuffle();
     String sillyDescription = dishDescriptions.first;
 
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const NumOfItems(numOfItem: 1),
-            const SizedBox(width: defaultPadding * 0.75),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    dish.name,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: defaultPadding / 4),
-                  Text(
-                    sillyDescription,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ],
+    return Dismissible(
+      key: ValueKey(widget.dish.dishId),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        cart.removeItem(widget.dish.dishId);
+      },
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const NumOfItems(numOfItem: 1),
+              const SizedBox(width: defaultPadding * 0.75),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.dish.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: defaultPadding / 4),
+                    Text(
+                      sillyDescription,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: defaultPadding / 2),
-            Text(
-              "A\$${dish.price}",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall!
-                  .copyWith(color: primaryColor),
-            )
-          ],
-        ),
-        const SizedBox(height: defaultPadding / 2),
-        const Divider(),
-      ],
+              const SizedBox(width: defaultPadding / 2),
+              Text(
+                "A\$${widget.dish.price}",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall!
+                    .copyWith(color: primaryColor),
+              )
+            ],
+          ),
+          const SizedBox(height: defaultPadding / 2),
+          const Divider(),
+        ],
+      ),
     );
   }
 }

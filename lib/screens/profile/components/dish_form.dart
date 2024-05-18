@@ -24,6 +24,7 @@ class _UpdateDishFormState extends State<UpdateDishForm> {
             decoration: const InputDecoration(labelText: "Dish Name ..."),
           ),
           TextFormField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _priceController,
             decoration: const InputDecoration(labelText: "Price ..."),
           ),

@@ -17,7 +17,7 @@ class Dish {
     return Dish(
       dishId: json['dishId'] as int,
       name: json['name'] as String,
-      price: json['price'] as double,
+      price: json['price'],
       imageUrl: json['imageUrl'] == ''
           ? 'https://cdn-icons-png.freepik.com/512/282/282465.png'
           : json['imageUrl'],
