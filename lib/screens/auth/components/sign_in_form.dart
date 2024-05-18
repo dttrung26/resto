@@ -4,6 +4,7 @@ import 'package:resto/entry_point.dart';
 import 'package:resto/models/user.dart';
 import 'package:resto/screens/findRestaurants/find_restaurants_screen.dart';
 import 'package:resto/screens/home/home_screen.dart';
+import 'package:resto/screens/profile/profile_screen.dart';
 
 import '../../../components/buttons/primary_button.dart';
 import '../../../constants.dart';
@@ -91,13 +92,23 @@ class _SignInFormState extends State<SignInForm> {
                 if (loggedInUser != null) {
                   Provider.of<AuthProvider>(context, listen: false)
                       .setUser(loggedInUser);
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EntryPoint(),
-                    ),
-                    (_) => true,
-                  );
+                  if (loggedInUser.role == 'user') {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EntryPoint(),
+                      ),
+                      (_) => true,
+                    );
+                  } else {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ),
+                      (_) => true,
+                    );
+                  }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

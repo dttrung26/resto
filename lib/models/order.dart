@@ -5,12 +5,13 @@ class Order {
   final int orderId;
   final bool isProcessed;
   final bool isDone;
+  final bool isDenied;
+  final bool isReady;
+  final bool isDelivered;
   final DateTime dateTime;
   final double totalPrice;
   final int userID;
   final int restaurantId;
-  final bool isReady;
-  final bool isDelivered;
   final int? driverId;
   final String? restaurantName;
   final List<Dish>? dishes;
@@ -19,6 +20,7 @@ class Order {
     required this.orderId,
     required this.isProcessed,
     required this.isDone,
+    required this.isDenied,
     required this.dateTime,
     required this.totalPrice,
     required this.userID,
@@ -38,6 +40,7 @@ class Order {
       dateTime: DateTime.parse(json['dateTime']),
       totalPrice: json['totalPrice'],
       userID: json['userID'],
+      isDenied: json['isDenied'],
       restaurantId: json['resturantId'],
       isReady: json['isReady'],
       isDelivered: json['isDelivered'],
@@ -61,6 +64,7 @@ class Order {
       'isReady': isReady,
       'isDelivered': isDelivered,
       'driverId': driverId,
+      'isDenied': isDenied,
       'resturantName': restaurantName,
       'dishes': dishes != null
           ? List<dynamic>.from(dishes!.map((dish) => dish.toJson()))

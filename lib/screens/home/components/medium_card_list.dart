@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resto/components/order_helper.dart';
+import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/restaurant.dart';
+import 'package:resto/models/user.dart';
 
 import '../../../components/cards/medium/restaurant_info_medium_card.dart';
 import '../../../components/scalton/medium_card_scalton.dart';
@@ -19,20 +23,10 @@ class MediumCardList extends StatefulWidget {
 }
 
 class _MediumCardListState extends State<MediumCardList> {
-  // bool isLoading = true;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(const Duration(seconds: 1), () {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // only for demo
+    User user = Provider.of<AuthProvider>(context).user!;
+
     List data = widget.restaurantList..shuffle();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,33 +35,37 @@ class _MediumCardListState extends State<MediumCardList> {
           width: double.infinity,
           height: 254,
           child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: data.length,
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(
-                left: defaultPadding,
-                right: (data.length - 1) == index ? defaultPadding : 0,
-              ),
-              child: RestaurantInfoMediumCard(
-                // image: data[index]['image'],
-                image: widget.restaurantList[index].imageUrl,
-                name: widget.restaurantList[index].restaurantName,
-                location: widget.restaurantList[index].address,
-                delivertTime: 25,
-                rating: widget.restaurantList[index].averageReview ?? 0.0,
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailsScreen(
-                        restaurant: widget.restaurantList[index],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
+              scrollDirection: Axis.horizontal,
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                var distance = DistanceHelper(
+                        restaurant: widget.restaurantList[index], user: user)
+                    .calculateDistance();
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: defaultPadding,
+                    right: (data.length - 1) == index ? defaultPadding : 0,
+                  ),
+                  child: RestaurantInfoMediumCard(
+                    // image: data[index]['image'],
+                    image: widget.restaurantList[index].imageUrl,
+                    name: widget.restaurantList[index].restaurantName,
+                    location: widget.restaurantList[index].address,
+                    delivertTime: ((distance / 50) * 60).toInt(),
+                    rating: widget.restaurantList[index].averageReview ?? 0.0,
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsScreen(
+                              restaurant: widget.restaurantList[index],
+                              estimatedTime: ((distance / 50) * 60).toInt()),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }),
         ),
       ],
     );

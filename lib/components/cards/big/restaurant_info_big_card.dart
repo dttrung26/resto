@@ -35,7 +35,6 @@ class RestaurantInfoBigCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // pass list of images here
             BigCardImageSlide(images: images),
             const SizedBox(height: defaultPadding / 2),
             Text(name, style: Theme.of(context).textTheme.titleLarge),
@@ -82,7 +81,7 @@ class RestaurantInfoBigCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(isFreeDelivery ? "Free" : "Paid",
+                Text('Take away',
                     style: Theme.of(context).textTheme.labelSmall),
               ],
             ),

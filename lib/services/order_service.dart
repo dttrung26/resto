@@ -30,4 +30,38 @@ class OrderService {
       return order;
     }
   }
+
+  Future<List<Order>> getOrdersByUserId(int userId) async {
+    try {
+      final response =
+          await http.get(Uri.parse('$baseUrl/searchByUserId?userId=$userId'));
+
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = json.decode(response.body);
+        return jsonResponse.map((order) => Order.fromJson(order)).toList();
+      } else {
+        throw Exception('Failed to load orders');
+      }
+    } catch (e) {
+      throw Exception('Failed to load orders: $e');
+    }
+  }
+
+  Future<List<Order>> getOrdersByRestaurantId(int restaurantId) async {
+    try {
+      final response = await http.get(
+          Uri.parse('$baseUrl/searchByRestaurant?restaurantId=$restaurantId'));
+
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = json.decode(response.body);
+        return jsonResponse.map((order) => Order.fromJson(order)).toList();
+      } else {
+        throw Exception('Failed to load orders');
+      }
+    } catch (e) {
+      throw Exception('Failed to load orders: $e');
+    }
+  }
 }

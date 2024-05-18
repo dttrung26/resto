@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resto/components/order_helper.dart';
 import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/restaurant.dart';
 import 'package:resto/models/user.dart';
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         leading: const SizedBox(),
         title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Text("G'day ${user.username}"),
             Text(
@@ -94,34 +96,8 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
 
-              // SectionTitle(
-              //   title: "Cate 2",
-              //   press: () => Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => const FeaturedScreen(),
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: defaultPadding),
-              // const MediumCardList(
-              //   restaurant: Restaurant,
-              // ),
               const SizedBox(height: 20),
-              // Banner
-              // const PromotionBanner(),
-              // const SizedBox(height: 20),
-              // SectionTitle(
-              //   title: "Best Pick",
-              //   press: () => Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => const FeaturedScreen(),
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 16),
-              // const MediumCardList(),
+
               const PromotionBanner(),
               const SizedBox(height: 16),
               SectionTitle(
@@ -150,11 +126,14 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(defaultPadding),
                         child: Column(
                           children: restaurants.map((restaurant) {
+                            var distance = DistanceHelper(
+                                    restaurant: restaurant, user: user)
+                                .calculateDistance();
                             return RestaurantInfoBigCard(
                               name: restaurant.restaurantName,
                               rating: restaurant.averageReview ?? 0,
                               numOfRating: restaurant.reviews?.length ?? 0,
-                              deliveryTime: 25,
+                              deliveryTime: ((distance / 50) * 60).toInt(),
                               images: [restaurant.imageUrl],
                               foodType: [restaurant.category],
                               press: () {
@@ -163,6 +142,8 @@ class HomeScreen extends StatelessWidget {
                                   MaterialPageRoute(
                                     builder: (context) => DetailsScreen(
                                       restaurant: restaurant,
+                                      estimatedTime:
+                                          ((distance / 50) * 60).toInt(),
                                     ),
                                   ),
                                 );

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:resto/components/order_helper.dart';
+import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/restaurant.dart';
+import 'package:resto/models/user.dart';
 import 'package:resto/screens/details/details_screen.dart';
 import 'package:resto/services/restaurant_service.dart';
 
@@ -30,12 +34,12 @@ class _SearchScreenState extends State<SearchScreen> {
       });
     } catch (e) {
       print('Error: $e');
-      // Handle error
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<AuthProvider>(context, listen: false).user!;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -48,13 +52,13 @@ class _SearchScreenState extends State<SearchScreen> {
             children: [
               TextField(
                 controller: _searchController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   icon: Icon(Icons.search),
                   hintText: 'Search by keyword...',
                 ),
                 onSubmitted: (_) => _search(_searchController.text),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               kOrText,
@@ -85,11 +89,14 @@ class _SearchScreenState extends State<SearchScreen> {
                         itemCount: _searchResults.length,
                         itemBuilder: (context, index) {
                           final restaurant = _searchResults[index];
+                          var distance =
+                              DistanceHelper(restaurant: restaurant, user: user)
+                                  .calculateDistance();
                           return RestaurantInfoBigCard(
                             name: restaurant.restaurantName,
                             rating: restaurant.averageReview ?? 0,
                             numOfRating: restaurant.reviews?.length ?? 0,
-                            deliveryTime: 25,
+                            deliveryTime: ((distance / 50) * 60).toInt(),
                             images: [restaurant.imageUrl],
                             foodType: [restaurant.category],
                             press: () {
@@ -98,6 +105,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => DetailsScreen(
                                     restaurant: restaurant,
+                                    estimatedTime:
+                                        ((distance / 50) * 60).toInt(),
                                   ),
                                 ),
                               );

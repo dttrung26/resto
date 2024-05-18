@@ -35,7 +35,7 @@ class RestaurantInfo extends StatelessWidget {
           children: [
             const DeliveryInfo(
               iconSrc: "assets/icons/delivery.svg",
-              text: "Free",
+              text: "Standard",
               subText: "Delivery",
             ),
             const SizedBox(width: defaultPadding),

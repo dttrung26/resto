@@ -116,6 +116,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         orderId: 0,
                         isProcessed: false,
                         isDone: false,
+                        isDenied: false,
                         totalPrice: totalPrice,
                         userID: user.userID,
                         restaurantId: firstItem?.restaurantId ?? 47,

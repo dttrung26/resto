@@ -3,12 +3,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:resto/constants.dart';
 import 'package:resto/controllers/auth_provider.dart';
+import 'package:resto/models/restaurant.dart';
 import 'package:resto/models/user.dart';
 import 'package:resto/screens/profile/card_screen.dart';
 import 'package:resto/screens/profile/dish_screen.dart';
 import 'package:resto/screens/profile/location_screen.dart';
+import 'package:resto/screens/profile/order_management_restaurant.dart';
+import 'package:resto/screens/profile/order_management_user.dart';
 import 'package:resto/screens/profile/subscription_screen.dart';
 import 'package:resto/screens/profile/update_restaurant_screen.dart';
+import 'package:resto/services/restaurant_service.dart';
 
 class ProfileBody extends StatefulWidget {
   const ProfileBody({super.key});
@@ -99,6 +103,22 @@ class _ProfileBodyState extends State<ProfileBody> {
                         },
                       )
                     : Container(),
+                isNormalUser
+                    ? ProfileMenuCard(
+                        svgSrc: "assets/icons/cart.svg",
+                        title: "Orders",
+                        subTitle: "Manage your orders history",
+                        press: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => OrderManagementUser(
+                                user: user,
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    : Container(),
                 isRestoOwner
                     ? ProfileMenuCard(
                         svgSrc: "assets/icons/resto.svg",
@@ -126,6 +146,26 @@ class _ProfileBodyState extends State<ProfileBody> {
                               builder: (context) => DishScreen(user: user),
                             ),
                           );
+                        },
+                      )
+                    : Container(),
+                isRestoOwner
+                    ? ProfileMenuCard(
+                        svgSrc: "assets/icons/cart.svg",
+                        title: "Orders Management",
+                        subTitle: "Manage restaurant order history",
+                        press: () async {
+                          Restaurant? restaurant = await RestaurantService()
+                              .getRestaurantByUserId(user.userID);
+                          if (restaurant != null) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => OrderManagementRestaurant(
+                                  restaurant: restaurant,
+                                ),
+                              ),
+                            );
+                          }
                         },
                       )
                     : Container(),
