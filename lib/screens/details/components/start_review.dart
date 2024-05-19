@@ -16,7 +16,7 @@ class StarRating extends StatelessWidget {
         5,
         (index) => Icon(
           index < starRating ? Icons.star : Icons.star_border,
-          color: Colors.yellow,
+          color: Colors.green,
         ),
       ),
     );

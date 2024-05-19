@@ -29,7 +29,8 @@ class ReviewService {
 
   Future<List<Review>> getReviewByRestaurant(int restaurantId) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/$restaurantId'));
+      final response = await http.get(
+          Uri.parse('$baseUrl/GetReviewbyResturant?Resturantid=$restaurantId'));
       print(response.statusCode);
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = json.decode(response.body);

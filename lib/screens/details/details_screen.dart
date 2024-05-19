@@ -90,14 +90,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 const SizedBox(height: defaultPadding),
                 _reviews.isNotEmpty
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _reviews.map((review) {
-                          return ListTile(
-                            title: StarRating(starRating: review.star),
-                            subtitle: Text(review.reviewContent),
-                          );
-                        }).toList(),
+                    ? Container(
+                        height: 200,
+                        child: SingleChildScrollView(
+                          child: Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: _reviews.map((review) {
+                                return ListTile(
+                                  title: StarRating(starRating: review.star),
+                                  subtitle: Text(review.reviewContent),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
                       )
                     : Text(
                         "No Reviews Found For This Restaurant",
