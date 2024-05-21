@@ -28,11 +28,11 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
             .getOrdersByRestaurantId(widget.restaurant.restaurantId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No orders found'));
+            return const Center(child: Text('No orders found'));
           } else {
             List<Order> orders = snapshot.data!;
 
@@ -51,7 +51,7 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.fastfood),
+                          icon: const Icon(Icons.fastfood),
                           onPressed: () async {
                             RestaurantService()
                                 .updateApprovedOrderStatus(true, order.orderId)
@@ -74,7 +74,7 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.no_food_rounded),
+                          icon: const Icon(Icons.no_food_rounded),
                           onPressed: () async {
                             RestaurantService()
                                 .updateDeniedOrderStatus(true, order.orderId)
