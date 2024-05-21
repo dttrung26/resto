@@ -67,7 +67,8 @@ class _ProfileBodyState extends State<ProfileBody> {
                         press: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => CardScreen(),
+                              builder: (context) =>
+                                  CardScreen(userId: user.userID),
                             ),
                           );
                         },
