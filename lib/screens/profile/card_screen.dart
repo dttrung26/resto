@@ -31,9 +31,7 @@ class _CardScreenState extends State<CardScreen> {
     String sillyValidTo = '5/27';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Manage Payment Methods"),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -72,7 +70,9 @@ class _CardScreenState extends State<CardScreen> {
                       Text("Balance: \$${user.balance}",
                           style: Theme.of(context).textTheme.headlineMedium),
                       user.cardNumber != null
-                          ? BalanceForm(userId: user.userID)
+                          ? BalanceForm(
+                              user: user,
+                            )
                           : Container(),
                     ],
                   );

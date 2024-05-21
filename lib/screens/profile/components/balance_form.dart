@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resto/constants.dart';
 import 'package:resto/controllers/auth_provider.dart';
+import 'package:resto/models/user.dart';
 import 'package:resto/services/auth_service.dart';
 import 'package:resto/services/user_service.dart';
 
 class BalanceForm extends StatefulWidget {
-  final int userId;
-  const BalanceForm({super.key, required this.userId});
+  final User user;
+  const BalanceForm({super.key, required this.user});
 
   @override
   State<BalanceForm> createState() => _BalanceFormState();
@@ -22,7 +23,7 @@ class _BalanceFormState extends State<BalanceForm> {
       children: [
         TextFormField(
           controller: _balanceController,
-          decoration: const InputDecoration(labelText: 'Balance'),
+          decoration: const InputDecoration(labelText: 'Top up (in \$AUD) ...'),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
         ),
         const SizedBox(
@@ -31,13 +32,14 @@ class _BalanceFormState extends State<BalanceForm> {
         Center(
           child: ElevatedButton(
             onPressed: () async {
-              double updatedBalance = double.parse(_balanceController.text);
+              double topUp = double.parse(_balanceController.text);
+              double updatedBalance = topUp + widget.user.balance;
               await UserService()
-                  .updateBalance(widget.userId, updatedBalance)
+                  .updateBalance(widget.user.userID, updatedBalance)
                   .then((value) async {
                 if (value) {
                   var updatedUser =
-                      await AuthService.getUserById(widget.userId);
+                      await AuthService.getUserById(widget.user.userID);
                   if (updatedUser != null) {
                     Provider.of<AuthProvider>(context, listen: false)
                         .setUser(updatedUser);
@@ -56,7 +58,6 @@ class _BalanceFormState extends State<BalanceForm> {
                   ),
                 );
               });
-              // Show a confirmation message
             },
             child: Text('Update'),
           ),
