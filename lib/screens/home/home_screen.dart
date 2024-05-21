@@ -11,12 +11,10 @@ import '../../components/cards/big/restaurant_info_big_card.dart';
 import '../../components/section_title.dart';
 import '../../constants.dart';
 import '../../demoData.dart';
-import '../filter/filter_screen.dart';
 import '../details/details_screen.dart';
 import '../featured/featurred_screen.dart';
 import 'components/medium_card_list.dart';
 import 'components/promotion_banner.dart';
-import 'package:resto/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
