@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:resto/components/order_helper.dart';
+import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/order.dart';
 import 'package:resto/models/restaurant.dart';
 import 'package:resto/screens/profile/child_order_management_user.dart';
+import 'package:resto/services/auth_service.dart';
 import 'package:resto/services/order_service.dart';
 import 'package:resto/services/restaurant_service.dart';
+import 'package:resto/services/user_service.dart';
 
 class OrderManagementRestaurant extends StatefulWidget {
   final Restaurant restaurant;
@@ -78,8 +82,22 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
                           onPressed: () async {
                             RestaurantService()
                                 .updateDeniedOrderStatus(true, order.orderId)
-                                .then((value) {
+                                .then((value) async {
                               if (value) {
+                                var normalUser =
+                                    await AuthService.getUserById(order.userID);
+                                if (normalUser != null) {
+                                  double refundAmount =
+                                      normalUser.balance + order.totalPrice;
+                                  await UserService().updateBalance(
+                                      normalUser.userID, refundAmount);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Refund process proceeded successfully!'),
+                                    ),
+                                  );
+                                }
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
