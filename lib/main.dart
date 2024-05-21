@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:resto/constants.dart';
 import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/screens/auth/sign_in_screen.dart';
-import 'package:resto/screens/onboarding/onboarding_scrreen.dart';
-import 'package:resto/services/auth_service.dart';
 import 'package:resto/controllers/cart_provider.dart';
 
 void main() {
