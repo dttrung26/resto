@@ -90,15 +90,24 @@ class _ChildOrderManagementUserState extends State<ChildOrderManagementUser> {
                   const SizedBox(
                     height: 15.0,
                   ),
-                  Text("Your Courier Information",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                  Text('Name : ${dummyCouriers[courierIndex].name}',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  Text('Phone: ${dummyCouriers[courierIndex].phoneNumber}',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  (status == "Delivering" || status == "Delivered")
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Your Courier Information",
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall),
+                            Text('Name : ${dummyCouriers[courierIndex].name}',
+                                style: Theme.of(context).textTheme.bodyLarge),
+                            Text(
+                                'Phone: ${dummyCouriers[courierIndex].phoneNumber}',
+                                style: Theme.of(context).textTheme.bodyLarge),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        )
+                      : Container(),
                   status == "Delivering"
                       ? ShipmentProgressBar(
                           estimatedDeliveryTimeInMinutes:
