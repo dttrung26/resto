@@ -34,12 +34,12 @@ class RatingWithCounter extends StatelessWidget {
             BlendMode.srcIn,
           ),
         ),
-        const SizedBox(width: 8),
-        Text("$numOfRating+ Ratings",
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall!
-                .copyWith(color: titleColor.withOpacity(0.74))),
+        // const SizedBox(width: 8),
+        // Text("$numOfRating+ Ratings",
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .labelSmall!
+        //         .copyWith(color: titleColor.withOpacity(0.74))),
       ],
     );
   }
