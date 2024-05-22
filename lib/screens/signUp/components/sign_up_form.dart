@@ -1,12 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/entry_point.dart';
 import 'package:resto/models/user.dart';
-import 'package:resto/screens/home/home_screen.dart';
-import 'package:resto/screens/phoneLogin/phone_login_screen.dart';
 import 'package:resto/screens/profile/profile_screen.dart';
 import 'package:resto/services/auth_service.dart';
 import '../../../constants.dart';
