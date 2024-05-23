@@ -215,7 +215,7 @@ class RestaurantService {
           '$apiUrl/api/Order/searchByDuration?startDateTime=$startDateTime&endDateTime=$endDateTime&resturantId=$restaurantId');
       final response = await http.get(
         Uri.parse(
-            '$apiUrl/api/Order/searchByDuration ?startDateTime=$startDateTime&endDateTime=$endDateTime&resturantId=$restaurantId'),
+            '$apiUrl/api/Order/searchByDuration?startDateTime=$startDateTime&endDateTime=$endDateTime&resturantId=$restaurantId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

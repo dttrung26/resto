@@ -35,7 +35,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
     bool doesUserHasSubcription = user!.hasSubscription!;
     var deliveryPrice = doesUserHasSubcription ? 0.0 : sillyDelivery;
-    var totalPrice = deliveryPrice + cart.totalAmount;
+    var totalPrice =
+        double.parse((deliveryPrice + cart.totalAmount).toStringAsFixed(2));
 
     return Scaffold(
       appBar: AppBar(
@@ -72,7 +73,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               const SizedBox(height: defaultPadding),
               Text("Your remaining balance: \$${user!.balance}"),
               const SizedBox(height: defaultPadding / 2),
-              PriceRow(text: "Subtotal", price: cart.totalAmount),
+              PriceRow(
+                  text: "Subtotal",
+                  price: double.parse(cart.totalAmount.toStringAsFixed(2))),
               const SizedBox(height: defaultPadding / 2),
               PriceRow(
                   text: "Delivery",

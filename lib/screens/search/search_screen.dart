@@ -92,7 +92,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                   .calculateDistance();
                           return RestaurantInfoBigCard(
                             name: restaurant.restaurantName,
-                            rating: restaurant.averageReview ?? 0,
+                            rating: double.parse(restaurant.averageReview!
+                                    .toStringAsFixed(2)) ??
+                                0,
                             numOfRating: restaurant.reviews?.length ?? 0,
                             deliveryTime: ((distance / 50) * 60).toInt(),
                             images: [restaurant.imageUrl],

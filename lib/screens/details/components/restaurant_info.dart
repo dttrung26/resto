@@ -28,7 +28,7 @@ class RestaurantInfo extends StatelessWidget {
         ),
         const SizedBox(height: defaultPadding / 2),
         RatingWithCounter(
-            rating: restaurant.averageReview!,
+            rating: double.parse(restaurant.averageReview!.toStringAsFixed(2)),
             numOfRating: restaurant.reviews!.length),
         const SizedBox(height: defaultPadding),
         Row(

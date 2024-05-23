@@ -51,7 +51,10 @@ class _MediumCardListState extends State<MediumCardList> {
                     name: widget.restaurantList[index].restaurantName,
                     location: widget.restaurantList[index].address,
                     delivertTime: ((distance / 50) * 60).toInt(),
-                    rating: widget.restaurantList[index].averageReview ?? 0.0,
+                    rating: double.parse(widget
+                            .restaurantList[index].averageReview!
+                            .toStringAsFixed(2)) ??
+                        0.0,
                     press: () {
                       Navigator.push(
                         context,

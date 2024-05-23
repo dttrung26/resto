@@ -64,7 +64,7 @@ class _OrderedItemCardState extends State<OrderedItemCard> {
               ),
               const SizedBox(width: defaultPadding / 2),
               Text(
-                "A\$${widget.dish.price}",
+                "A\$${widget.dish.price.toStringAsFixed(2)}",
                 style: Theme.of(context)
                     .textTheme
                     .labelSmall!

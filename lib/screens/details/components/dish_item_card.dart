@@ -58,7 +58,7 @@ class DishItemCard extends StatelessWidget {
                     //   overflow: TextOverflow.ellipsis,
                     // ),
                     Text(
-                      "\$ ${dish.price}",
+                      "\$ ${dish.price.toStringAsFixed(2)}",
                       style: Theme.of(context)
                           .textTheme
                           .labelLarge!
