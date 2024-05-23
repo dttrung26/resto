@@ -4,7 +4,6 @@ import 'package:resto/components/order_helper.dart';
 import 'package:resto/models/order.dart';
 import 'package:resto/models/user.dart';
 import 'package:resto/screens/profile/child_order_management_user.dart';
-import 'package:resto/services/auth_service.dart';
 import 'package:resto/services/order_service.dart';
 
 class OrderManagementUser extends StatefulWidget {
@@ -34,11 +33,11 @@ class _OrderManagementUserState extends State<OrderManagementUser> {
         future: futureOrders,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No orders found'));
+            return const Center(child: Text('No orders found'));
           } else {
             List<Order> orders = snapshot.data!;
 
