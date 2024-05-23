@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:resto/models/order.dart';
 import 'package:resto/models/restaurant.dart';
 
 class RestaurantService {
@@ -204,6 +205,33 @@ class RestaurantService {
     } catch (error) {
       print('Error during order status: ${error.toString()}');
       throw Exception("Failed to update order status: ${error.toString()}");
+    }
+  }
+
+  Future<List<Order>> getOrdersByDuration(
+      String startDateTime, String endDateTime, int restaurantId) async {
+    try {
+      print(
+          '$apiUrl/api/Order/searchByDuration?startDateTime=$startDateTime&endDateTime=$endDateTime&resturantId=$restaurantId');
+      final response = await http.get(
+        Uri.parse(
+            '$apiUrl/api/Order/searchByDuration ?startDateTime=$startDateTime&endDateTime=$endDateTime&resturantId=$restaurantId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = json.decode(response.body);
+        return jsonResponse
+            .map((orderJson) => Order.fromJson(orderJson))
+            .toList();
+      } else {
+        throw Exception('Failed to load orders');
+      }
+    } catch (error) {
+      print('Error fetching orders: $error');
+      throw Exception('Failed to load orders: $error');
     }
   }
 }

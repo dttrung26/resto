@@ -10,6 +10,7 @@ import 'package:resto/screens/profile/dish_screen.dart';
 import 'package:resto/screens/profile/location_screen.dart';
 import 'package:resto/screens/profile/order_management_restaurant.dart';
 import 'package:resto/screens/profile/order_management_user.dart';
+import 'package:resto/screens/profile/revenue_screen.dart';
 import 'package:resto/screens/profile/subscription_screen.dart';
 import 'package:resto/screens/profile/update_restaurant_screen.dart';
 import 'package:resto/services/restaurant_service.dart';
@@ -162,6 +163,26 @@ class _ProfileBodyState extends State<ProfileBody> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => OrderManagementRestaurant(
+                                  restaurant: restaurant,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      )
+                    : Container(),
+                isRestoOwner
+                    ? ProfileMenuCard(
+                        svgSrc: "assets/icons/clock.svg",
+                        title: "Revenue Management",
+                        subTitle: "Manage restaurant revenue per duration",
+                        press: () async {
+                          Restaurant? restaurant = await RestaurantService()
+                              .getRestaurantByUserId(user.userID);
+                          if (restaurant != null) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => RevenueScreen(
                                   restaurant: restaurant,
                                 ),
                               ),

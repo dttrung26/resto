@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:resto/components/order_helper.dart';
-import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/order.dart';
 import 'package:resto/models/restaurant.dart';
-import 'package:resto/screens/profile/child_order_management_user.dart';
 import 'package:resto/services/auth_service.dart';
 import 'package:resto/services/order_service.dart';
 import 'package:resto/services/restaurant_service.dart';
@@ -38,12 +35,20 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No orders found'));
           } else {
-            List<Order> orders = snapshot.data!;
+            // Filter orders to include only those with a "Pending" status
+            List<Order> pendingOrders = snapshot.data!
+                .where((order) =>
+                    OrderHelper(order: order).getOrderStatus() == 'Pending')
+                .toList();
+
+            if (pendingOrders.isEmpty) {
+              return const Center(child: Text('No pending orders found'));
+            }
 
             return ListView.builder(
-              itemCount: orders.length,
+              itemCount: pendingOrders.length,
               itemBuilder: (context, index) {
-                Order order = orders[index];
+                Order order = pendingOrders[index];
                 String status = OrderHelper(order: order).getOrderStatus();
                 return Card(
                   child: ListTile(
@@ -67,10 +72,13 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
                                         'Update order status successfully'),
                                   ),
                                 );
+                                setState(
+                                    () {}); // Refresh the state to update the UI
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Fail to order status'),
+                                    content:
+                                        Text('Fail to update order status'),
                                   ),
                                 );
                               }
@@ -104,10 +112,13 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
                                         'Update order status successfully'),
                                   ),
                                 );
+                                setState(
+                                    () {}); // Refresh the state to update the UI
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Fail to order status'),
+                                    content:
+                                        Text('Fail to update order status'),
                                   ),
                                 );
                               }
