@@ -6,6 +6,7 @@ import 'package:resto/controllers/auth_provider.dart';
 import 'package:resto/models/restaurant.dart';
 import 'package:resto/models/user.dart';
 import 'package:resto/screens/profile/card_screen.dart';
+import 'package:resto/screens/profile/courier_screen.dart';
 import 'package:resto/screens/profile/dish_screen.dart';
 import 'package:resto/screens/profile/location_screen.dart';
 import 'package:resto/screens/profile/order_management_restaurant.dart';
@@ -185,6 +186,24 @@ class _ProfileBodyState extends State<ProfileBody> {
                                 builder: (context) => RevenueScreen(
                                   restaurant: restaurant,
                                 ),
+                              ),
+                            );
+                          }
+                        },
+                      )
+                    : Container(),
+                isRestoOwner
+                    ? ProfileMenuCard(
+                        svgSrc: "assets/icons/fire.svg",
+                        title: "Courier Management",
+                        subTitle: "Manage courier revenue per duration",
+                        press: () async {
+                          Restaurant? restaurant = await RestaurantService()
+                              .getRestaurantByUserId(user.userID);
+                          if (restaurant != null) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => CourierDeliveryScreen(),
                               ),
                             );
                           }

@@ -18,7 +18,7 @@ class RatingWithCounter extends StatelessWidget {
     return Row(
       children: [
         Text(
-          rating.toString(),
+          rating.toStringAsFixed(2),
           style: Theme.of(context)
               .textTheme
               .labelSmall!

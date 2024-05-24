@@ -66,6 +66,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       'assets/images/empty_cart.png',
                       fit: BoxFit.cover,
                     ),
+              const SizedBox(
+                height: 20,
+              ),
               doesUserHasSubcription
                   ? const Text(
                       "Free Delivery has been applied for subscribed user")
