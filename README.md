@@ -1,3 +1,3 @@
 # resto
 
-950 project
+Online Delivery Service Mobile Application supported for users and restaurant owners.
