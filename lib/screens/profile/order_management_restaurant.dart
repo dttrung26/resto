@@ -35,7 +35,6 @@ class _OrderManagementRestaurantState extends State<OrderManagementRestaurant> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No orders found'));
           } else {
-            // Filter orders to include only those with a "Pending" status
             List<Order> pendingOrders = snapshot.data!
                 .where((order) =>
                     OrderHelper(order: order).getOrderStatus() == 'Pending')

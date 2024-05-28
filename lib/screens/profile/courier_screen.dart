@@ -10,24 +10,9 @@ class CourierDeliveryScreen extends StatefulWidget {
 class _CourierDeliveryScreenState extends State<CourierDeliveryScreen> {
   // Dummy data for orders
   final List<Map<String, dynamic>> _orders = [
-    {
-      'orderId': 1,
-      'customerName': 'John Doe',
-      'address': '123 Main St',
-      'status': 'Pending'
-    },
-    {
-      'orderId': 2,
-      'customerName': 'Jane Smith',
-      'address': '456 Elm St',
-      'status': 'Pending'
-    },
-    {
-      'orderId': 3,
-      'customerName': 'Bob Johnson',
-      'address': '789 Oak St',
-      'status': 'Pending'
-    },
+    {'orderId': 1, 'customerName': 'John Doe', 'address': '123 Main St', 'status': 'Pending'},
+    {'orderId': 2, 'customerName': 'Jane Smith', 'address': '456 Elm St', 'status': 'Pending'},
+    {'orderId': 3, 'customerName': 'Bob Johnson', 'address': '789 Oak St', 'status': 'Pending'},
   ];
 
   void _acceptOrder(int index) {
@@ -76,21 +61,15 @@ class _CourierDeliveryScreenState extends State<CourierDeliveryScreen> {
                   children: [
                     IconButton(
                       icon: Icon(Icons.check_circle, color: Colors.green),
-                      onPressed: order['status'] == 'Pending'
-                          ? () => _acceptOrder(index)
-                          : null,
+                      onPressed: order['status'] == 'Pending' ? () => _acceptOrder(index) : null,
                     ),
                     IconButton(
                       icon: Icon(Icons.cancel, color: Colors.red),
-                      onPressed: order['status'] == 'Pending'
-                          ? () => _denyOrder(index)
-                          : null,
+                      onPressed: order['status'] == 'Pending' ? () => _denyOrder(index) : null,
                     ),
                     IconButton(
                       icon: Icon(Icons.delivery_dining, color: Colors.blue),
-                      onPressed: order['status'] == 'Accepted'
-                          ? () => _confirmDelivery(index)
-                          : null,
+                      onPressed: order['status'] == 'Accepted' ? () => _confirmDelivery(index) : null,
                     ),
                   ],
                 ),

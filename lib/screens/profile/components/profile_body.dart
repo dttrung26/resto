@@ -196,7 +196,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                     ? ProfileMenuCard(
                         svgSrc: "assets/icons/fire.svg",
                         title: "Courier Management",
-                        subTitle: "Manage courier revenue per duration",
+                        subTitle: "Manage courier delivery",
                         press: () async {
                           Restaurant? restaurant = await RestaurantService()
                               .getRestaurantByUserId(user.userID);
